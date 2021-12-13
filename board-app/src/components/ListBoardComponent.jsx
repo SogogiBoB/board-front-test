@@ -4,20 +4,16 @@ import BoardService from '../service/BoardService';
 class ListBoardComponent extends Component {
     constructor(props) {
         super(props)
-    // # 1. 
         this.state = { 
             boards: []
         }
 		
     }
-    // # 2. 
     componentDidMount() {
         BoardService.getBoards().then((res) => {
             this.setState({ boards: res.data});
         });
     }
-
-    // # 3.
     render() {
         return (
             <div>
