@@ -16,6 +16,7 @@ function App() {
             <Routes>
               <Route path = "/" exact={true} element = {<ListBoardComponent/>}></Route>
               <Route path = "/board" element = {<ListBoardComponent/>}></Route>
+              <Route path = "/createBoard" element = {<CreateBoardComponent/>}></Route>
             </Routes>
           </div>
         <FooterComponent/>

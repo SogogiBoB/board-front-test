@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import BoardService from '../service/BoardService';
 
 class ListBoardComponent extends Component {
@@ -9,12 +10,17 @@ class ListBoardComponent extends Component {
             boards: [],
             title: '',
             content: '',
-            writer: ''
+            writer: '',
+            showHide : false
         }
 
         this.changeTitleHandler = this.changeTitleHandler.bind(this);
         this.changeContentHandler = this.changeContentHandler.bind(this);
         this.createBoards = this.createBoards.bind(this);
+    }
+
+    handleModalShowHide() {
+        this.setState({ showHide: !this.state.showHide })
     }
 
     componentDidMount() {
@@ -34,7 +40,7 @@ class ListBoardComponent extends Component {
     }
 
     createBoards = (e) => {
-        e.preventDefault();
+        this.setState({ showHide: !this.state.showHide });
 
         let newBoard = {
             uid: null,
@@ -56,8 +62,7 @@ class ListBoardComponent extends Component {
                 <h2 className="text-center">Boards List</h2>
 
                 <div className ="row">
-                
-                    <table className="table table-striped table-bordered">
+                <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>글 번호</th>
@@ -84,29 +89,37 @@ class ListBoardComponent extends Component {
                     </table>
                 </div>
 
-                <div className = "container">
-                    <div className = "row">
-                        <div className = "card col-md-6 offset-md-3 offset-md-3">
-                            <h5 className="text-center">새글 작성</h5>
-                            <div className = "card-body">
-                                <form>
-                                    <div className = "form-group">
-                                        <label> Title </label>
-                                        <input type="text" placeholder="title" name="title" className="form-control" 
-                                        value={this.state.title} onChange={this.changeTitleHandler}/>
-                                    </div>
-                                    <div className = "form-group">
-                                        <label> 내용  </label>
-                                        <textarea placeholder="content" name="content" className="form-control" 
-                                        value={this.state.content} onChange={this.changeContentHandler}/>
-                                    </div>
-                                    <button className="btn btn-success" onClick={this.createBoards}>Save</button>
-                                    <button className="btn btn-danger" style={{marginLeft:"10px"}}>Cancel</button>
-                                </form>
+                <Button variant="primary" onClick={() => this.handleModalShowHide()}>
+                    등록
+                </Button>
+
+                <Modal show={this.state.showHide}>
+                    <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
+                    <Modal.Title>새글 등록</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form>
+                            <div className = "form-group">
+                                <label>제목</label>
+                                <input type="text" placeholder="title" name="title" className="form-control" 
+                                value={this.state.title} onChange={this.changeTitleHandler}/>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            <div className = "form-group">
+                                <label>내용</label>
+                                <textarea placeholder="content" name="content" className="form-control" 
+                                value={this.state.content} onChange={this.changeContentHandler}/>
+                            </div>
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => this.handleModalShowHide()}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => {this.createBoards(); this.setState({title: '', content: ''})}}>
+                        Save Changes
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         );
     }
