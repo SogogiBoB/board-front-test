@@ -39,7 +39,7 @@ class ListBoardComponent extends Component {
         return params;
     }
 
-    retrieveBoards() {
+    retrieveBoards() { //paging 값을 가져오고 list 요청
         const {page, pageSize} = this.state;
         const params = this.getRequestParams(page, pageSize);
 
@@ -54,21 +54,19 @@ class ListBoardComponent extends Component {
         });
     }
 
-    componentDidMount() {
+    componentDidMount() { //list를 요청하는 함수 실행
         this.retrieveBoards();
     }
 
-    handleModalShowRegistHide() {
+    handleModalShowRegistHide() { //등록 Modal show
         this.setState({ showRegistHide: !this.state.showRegistHide })
     }
 
-    handleModalShowUpdateHideEmpty() {
+    handleModalShowUpdateHideEmpty() { //수정 Modal 닫기
         this.setState({showUpdateHide: !this.state.showUpdateHide, title: '', content: ''})
     }
 
-    handleModalShowUpdateHide(board) {
-        console.log(board);
-
+    handleModalShowUpdateHide(board) { //수정 Modal show
         let uid = board.uid;
         let title = board.title;
         let content = board.content;
@@ -80,7 +78,7 @@ class ListBoardComponent extends Component {
             showUpdateHide: !this.state.showUpdateHide})
     }
 
-    changeTitleHandler = (event) => {
+    changeTitleHandler = (event) => { //제목란 변경 시 실행되는 이벤트. 변경이 일어나면 동시에 state에 반영
         this.setState({title: event.target.value});
     }
     
@@ -88,7 +86,7 @@ class ListBoardComponent extends Component {
         this.setState({content: event.target.value});
     }
 
-    createBoards = () => {
+    createBoards = () => { //등록 요청
         this.setState({ showRegistHide: !this.state.showRegistHide });
 
         let newBoard = {
@@ -98,11 +96,11 @@ class ListBoardComponent extends Component {
         }
         
         BoardService.createBoards(newBoard).then(res => {
-            this.componentDidMount();
             this.render();
+            this.componentDidMount();
         })
     }
-    updateBoards = () => {
+    updateBoards = () => { //수정 요청
         this.setState({showUpdateHide: !this.state.showUpdateHide});
 
         let updateitems = {
@@ -113,16 +111,16 @@ class ListBoardComponent extends Component {
 
         BoardService.updateBoards(updateitems).then(res => {
             alert("변경되었습니다.");
-            this.componentDidMount();
             this.render();
+            this.componentDidMount();
             this.setState({title: '', content: ''});
         })
     }
 
-    deleteBoards = (uid) => {
+    deleteBoards = (uid) => { //삭제 요청
         BoardService.deleteBoards(uid).then(res => {
-            this.componentDidMount();
             this.render();
+            this.componentDidMount();
         })
     }
 
