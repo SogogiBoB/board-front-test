@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { Pagination } from 'react-bootstrap';
 import BoardService from '../service/BoardService';
 
 class ListBoardComponent extends Component {
