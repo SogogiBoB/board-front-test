@@ -26,28 +26,6 @@ class ListBoardComponent extends Component {
         this.createBoards = this.createBoards.bind(this);
     }
 
-    handleModalShowRegistHide() {
-        this.setState({ showRegistHide: !this.state.showRegistHide })
-    }
-
-    handleModalShowUpdateHideEmpty() {
-        this.setState({showUpdateHide: !this.state.showUpdateHide, title: '', content: ''})
-    }
-
-    handleModalShowUpdateHide(board) {
-        console.log(board);
-
-        let uid = board.uid;
-        let title = board.title;
-        let content = board.content;
-
-        this.setState({
-            uid : uid,
-            title : title,
-            content : content,
-            showUpdateHide: !this.state.showUpdateHide})
-    }
-
     getRequestParams(page, pageSize) {
         let params = {};
 
@@ -78,6 +56,28 @@ class ListBoardComponent extends Component {
 
     componentDidMount() {
         this.retrieveBoards();
+    }
+
+    handleModalShowRegistHide() {
+        this.setState({ showRegistHide: !this.state.showRegistHide })
+    }
+
+    handleModalShowUpdateHideEmpty() {
+        this.setState({showUpdateHide: !this.state.showUpdateHide, title: '', content: ''})
+    }
+
+    handleModalShowUpdateHide(board) {
+        console.log(board);
+
+        let uid = board.uid;
+        let title = board.title;
+        let content = board.content;
+
+        this.setState({
+            uid : uid,
+            title : title,
+            content : content,
+            showUpdateHide: !this.state.showUpdateHide})
     }
 
     changeTitleHandler = (event) => {
