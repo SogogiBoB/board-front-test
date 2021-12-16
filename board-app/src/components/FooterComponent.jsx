@@ -14,7 +14,6 @@ class FooterComponent extends Component {
             <div>
                 <footer className="footer">
                     <span className="text-muted">Started 2021 </span>
-
                 </footer>
             </div>
         );
