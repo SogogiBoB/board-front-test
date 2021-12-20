@@ -16,7 +16,7 @@ class ListBoardComponent extends Component {
 
             page: 1,
             count: 0,
-            pageSize: 10
+            pageSize: 30
         }
 
         this.pageSize = [5, 10, 15];
