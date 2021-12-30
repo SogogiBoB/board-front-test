@@ -1,29 +1,29 @@
 import axios from 'axios';
 
-const BOARD_API_BASE_URL = "/board/api/boards";
-const BOARD_API_PAGED_URL = "/board/api/pagedBoards";
-const BOARD_API_UPDATE_URL = "/board/api/updateBoards";
+const BOARD_API_BASE_URL = "/board/api/board";
+const BOARD_API_PAGED_URL = "/board/api/pagedBoard";
+const BOARD_API_UPDATE_URL = "/board/api/updateBoard";
 const BOARD_API_DELETE_URL = "/board/api/deleteBoard";
 
 class BoardService {
 
-    getPagedBoards(params) {
+    getPagedBoard(params) {
         return axios.get(BOARD_API_PAGED_URL, {params});
     }
 
-    getBoards() {
+    getBoard() {
         return axios.get(BOARD_API_BASE_URL);
     }
 
-    createBoards(boards) {
-        return axios.post(BOARD_API_BASE_URL, boards);
+    createBoard(board) {
+        return axios.post(BOARD_API_BASE_URL, board);
     }
 
-    updateBoards(boards) {
-        return axios.put(BOARD_API_UPDATE_URL, boards);
+    updateBoard(board) {
+        return axios.put(BOARD_API_UPDATE_URL, board);
     }
 
-    deleteBoards(uid) {
+    deleteBoard(uid) {
         return axios.delete(BOARD_API_DELETE_URL + "/" + uid);
     }
 }
