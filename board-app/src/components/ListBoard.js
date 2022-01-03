@@ -7,7 +7,7 @@ import BoardService from '../service/BoardService';
 function useFetch(url) {
     const [data, setData] = useState([]);
 
-    useEffect(() => { //컴포넌트가 mount 되면 fetchUrl()이 실행됨
+    useEffect(() => { //컴포넌트가 mount 되면 fetchUrl()이 실행됨 = conponentDidMount
         const fetchData = async () => {
             const result = await axios.get(url);
             setData(result.data);
@@ -16,29 +16,46 @@ function useFetch(url) {
         fetchData();
 
     }, [url]);
-
+    
     return data;
 }
 
+const boardList = data.map((board) => 
+    <tr key = {board.uid} id={board.uid}>
+        <td> {board.uid} </td>
+        <td> {board.title} </td>
+        <td> {board.content} </td>
+        <td> 
+            <button className='btn btn-sm btn-secondary mx-2' data-bs-toggle="modal" data-bs-target="#testUpdateModal" onClick={ () => showUpdateModal(board)}>변경</button>
+            <button className='btn btn-sm btn-danger' onClick={ () => deleteBoard(board.uid) }>삭제</button> 
+        </td>
+    </tr>
+);
+
 
 function List() {
+
     const listUrl = "/board/api/board"
     const data = useFetch(listUrl);
 
     const [uid, setUid] = useState();
     const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+
     const changeTitle = (event) => {
         setTitle(event.target.value);
     }
-
-    const [content, setContent] = useState('');
+        
     const changeContent = (event) => {
         setContent(event.target.value);
     }
 
     const createBoard = () => {
-        let board = {title: title, content: content};
-
+        let board = {
+            title: title, 
+            content: content
+        };
+        
         BoardService.createBoard(board).then(res=> {
             window.location.reload();
         });
@@ -87,20 +104,7 @@ function List() {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            data.map(
-                                board => 
-                                <tr key = {board.uid} id={board.uid}>
-                                    <td> {board.uid} </td>
-                                    <td> {board.title} </td>
-                                    <td> {board.content} </td>
-                                    <td> 
-                                        <button className='btn btn-sm btn-secondary mx-2' data-bs-toggle="modal" data-bs-target="#testUpdateModal" onClick={ () => showUpdateModal(board)}>변경</button>
-                                        <button className='btn btn-sm btn-danger' onClick={ () => deleteBoard(board.uid) }>삭제</button> 
-                                    </td>
-                                </tr>
-                            )
-                        }
+                        { boardList }
                     </tbody>
                 </table>
                 <div className='btnBox'>
