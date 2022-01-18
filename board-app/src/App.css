@@ -1,7 +1,6 @@
 .App {
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -9,13 +8,16 @@
 .footer {
   text-align: center;
 }
-.btnBox {text-align: right;}
-
 .container h2{margin: 20px 0;}
 
-table {width: 70%;}
+section {width: 700px; margin: 0 auto;}
+
+table {text-align: center;}
 
 table thead {text-align: center;}
+table thead #thManage {width:25%;}
+table thead #thId {width:20%;}
+table thead #thTitle {width:55%;}
 
 table tbody tr td:nth-child(4) {width: 130px}
 
@@ -48,3 +50,40 @@ table tbody tr td:nth-child(4) {width: 130px}
     transform: rotate(360deg);
   }
 }
+
+#manageSection .btn {margin: 0 5px;}
+
+.linkStyle {text-decoration: none; color:black}
+.linkStyle:hover {font-weight: bold;}
+
+.btn_section {text-align: right;}
+
+.detail_section {width: 700px; margin: 0 auto;}
+
+.title_section {margin-bottom: 30px;}
+
+.content_area {
+  min-height: 200px; 
+  border: 1px solid #ccd3d8;
+  border-radius: 5px;
+  padding: 20px;
+  position: relative;
+}
+
+#upd_textarea {min-height: 200px; height: auto;}
+
+.inner {margin-bottom: 10px; position: relative;}
+
+.title_only, .date_box {display: inline-block;}
+
+.date_box {position: absolute; right: 0;}
+
+.date_area {
+  font-size: 12px;
+}
+.date_area span {
+  padding: 10px;
+  text-align: center;
+}
+
+h6 {font-weight: 900;}
