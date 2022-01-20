@@ -40,23 +40,17 @@ function List() {
                 });
             } else {
                 BoardService.getPagedBoard(listUrl, page, keyword, selectedSearchCode)
-                    .then(res=> {
-                        console.log("검색");
-                        console.log(res);
-                        
-                        if(keyword ==='') {
-                            setData(res.data.content);
-                            setTotalCnt(res.data.totalElements);
-                        } else {
-                            console.log(res.data);
-                            setData(res.data.resultList);
-                            setTotalCnt(res.data.resultCnt);
-                        }
+                .then(res=> {
+                    console.log("검색");
+
+                    console.log(res.data);
+                    setData(res.data.resultList);
+                    setTotalCnt(res.data.resultCnt);
                 });
             }
         };
         selectBoard();
-    },[listUrl, page]);
+    },[page]);
     //page 값이 바뀌면 자동으로 감지해서 내부 함수 실행함
 
     //page 변경 시 setPage => useEffect가 변경을 감지
@@ -93,31 +87,35 @@ function List() {
         
         if(selectedSearchCode === '') {
             alert("검색 조건을 선택해주세요");
+            return;
         } else {
             if(keyword === '') {
                 alert("검색어를 입력해주세요");
+                return;
             }
         }
 
         BoardService.getPagedBoard(listUrl, page, keyword, selectedSearchCode)
-            .then(res=> {
-                console.log("검색");
-                console.log(res);
-                
-                if(keyword ==='') {
-                    setData(res.data.content);
-                    setTotalCnt(res.data.totalElements);
-                } else {
-                    console.log(res.data);
-                    setData(res.data.resultList);
-                    setTotalCnt(res.data.resultCnt);
-                }
+        .then(res=> {
+            console.log("검색");
+
+            console.log(res.data);
+            setData(res.data.resultList);
+            setTotalCnt(res.data.resultCnt);
         });
     }
 
     const resetKeyword = () => {
         document.getElementById("searchInput").value = '';
-        searchThisBoard();
+
+        BoardService.getPagedBoard(listUrl, page)
+        .then(res=> {
+            console.log("일반");
+            setData(res.data.content);
+            console.log(res.data.content);
+            // setTotalCnt(res.data.resultCnt);
+            setTotalCnt(res.data.totalElements);
+        });
     }
 
     return (
@@ -125,7 +123,7 @@ function List() {
             <h2 className="text-center">Board List</h2>
             <section id="search_section">
                 <div id="search_box">
-                    <Form.Select id="select_box" size='sm'>
+                    <Form.Select id="select_box" size='sm' title='gubun'>
                         <option value="">선택</option>
                         <option value="no">글번호</option>
                         <option value="ti">제목</option>
@@ -142,26 +140,29 @@ function List() {
             </section>
             <section>
                 <Table hover>
-                    <thead>
+                    <thead className='table-dark'>
                         <tr>
                             <th id="thId">글번호</th>
                             <th id="thTitle">제목</th>
                             <th id="thRegist">등록일</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {data && data.map((board) => {
-                            const detailUrl = '/detail/'+board.uid;
-                            return <tr key = {board.uid} className={board.uid}>
-                                    <td> {board.uid} </td>
-                                    <td> <Link to={detailUrl} className='linkStyle'>{board.title}</Link> </td>
-                                    <td> {board.frstRegistDate} </td>
-                                </tr>;
-                                }
-                            )
+                    <tbody id="boardListTbody">
+                        {data.length > 0 
+                            ? (data.map((board) => {
+                                const detailUrl = '/detail/'+board.uid;
+                                return  <tr key = {board.uid} className={board.uid}>
+                                            <td> {board.uid} </td>
+                                            <td> <Link to={detailUrl} className='linkStyle'>{board.title}</Link> </td>
+                                            <td> {board.frstRegistDate} </td>
+                                        </tr>;
+                                })
+                            ) 
+                            : (<tr><td colSpan="3">No data</td></tr>)
                         }
                     </tbody>
                 </Table>
+
                 <Pagination
                     activePage={page}
                     itemsCountPerPage={10}
@@ -192,12 +193,12 @@ function List() {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={createBoard}>
-                    Save Changes
-                </Button>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={createBoard}>
+                        Save Changes
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </div>

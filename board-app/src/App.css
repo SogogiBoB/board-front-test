@@ -104,4 +104,4 @@ ul.pagination li a:hover, ul.pagination li a.active { color: blue; }
 #searchInput {max-width: 30%; height: 30px; font-size: 12px;}
 .searchBtn {margin-left: 5px;}
 
-#select_box {height: 30px; width: 10%; margin-right: 5px; font-size: 12px; text-align: center;}
+#select_box {height: 30px; width: 90px; margin-right: 5px; font-size: 12px; text-align: center;}
