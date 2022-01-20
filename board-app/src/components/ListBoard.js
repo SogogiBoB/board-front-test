@@ -33,7 +33,7 @@ function List() {
             let keyword = document.getElementById("searchInput").value;
             let selectedSearchCode = document.getElementById("select_box").value;
 
-            if(keyword ==='') {
+            if(keyword ==='' || keyword === " ") {
                 BoardService.getPagedBoard(listUrl, page)
                 .then(res=> {
                     setData(res.data.content);
@@ -78,32 +78,32 @@ function List() {
     }
 
     const searchThisBoard = () => {
-        //다른 페이지를 보다가 검색을 한 경우 페이지를 1로 초기화
-        setPage(1);
 
         let keyword = document.getElementById("searchInput").value;
         let selectedSearchCode = document.getElementById("select_box").value;
         
-        if(selectedSearchCode === '') {//검색 조건을 고르지 않은 경우
+        if(selectedSearchCode === '') {//검색 조건을 선택하지 않은 경우
             alert("검색 조건을 선택해주세요");
-            return;
         } else {
-            if(keyword === '') {//검색 조건은 골랐지만 검색어가 없는 경우
+            if(keyword === '' || keyword === ' ') {//검색 조건은 선택했지만 검색어가 없는 경우
                 alert("검색어를 입력해주세요");
-                return;
+            } else {
+                //다른 페이지를 보다가 검색을 한 경우 페이지를 1로 초기화
+                setPage(1);
+
+                //조건절에서 return 되지 않으면 실행
+                BoardService.getPagedBoard(listUrl, page, keyword, selectedSearchCode)
+                .then(res=> {
+                    setData(res.data.resultList);
+                    setTotalCnt(res.data.resultCnt);
+                });
             }
         }
-
-        //조건절에서 return 되지 않으면 실행
-        BoardService.getPagedBoard(listUrl, page, keyword, selectedSearchCode)
-        .then(res=> {
-            setData(res.data.resultList);
-            setTotalCnt(res.data.resultCnt);
-        });
     }
 
     //검색 초기화
     const resetKeyword = () => {
+        setPage(1);
         document.getElementById("searchInput").value = '';
 
         BoardService.getPagedBoard(listUrl, page)
