@@ -122,7 +122,7 @@ function List() {
             <h2 className="text-center">Board List</h2>
             <section id="search_section">
                 <div id="search_box">
-                    <Form.Select id="select_box" size='sm' title='gubun'>
+                    <Form.Select id="select_box" size='sm' title='선택'>
                         <option value="">선택</option>
                         <option value="no">글번호</option>
                         <option value="ti">제목</option>
