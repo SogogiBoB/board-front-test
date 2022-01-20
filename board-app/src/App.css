@@ -10,16 +10,14 @@
 }
 .container h2{margin: 20px 0;}
 
-section {width: 700px; margin: 0 auto;}
+section {width: 800px; margin: 0 auto;}
 
 table {text-align: center;}
 
 table thead {text-align: center;}
-table thead #thManage {width:25%;}
-table thead #thId {width:20%;}
-table thead #thTitle {width:55%;}
-
-table tbody tr td:nth-child(4) {width: 130px}
+table thead #thRegist {width:30%;}
+table thead #thId {width:10%;}
+table thead #thTitle {width:60%;}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -87,3 +85,23 @@ table tbody tr td:nth-child(4) {width: 130px}
 }
 
 h6 {font-weight: 900;}
+
+tfoot {justify-content: center;}
+.pagination { display: flex; justify-content: center; margin-top: 15px; }
+ul { list-style: none; padding: 0; }
+ul.pagination li { display: inline-block; width: 30px; height: 30px; border: 1px solid #e2e2e2; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer;}
+ul.pagination li:first-child{ border-radius: 5px 0 0 5px; }
+ul.pagination li:last-child{ border-radius: 0 5px 5px 0; }
+ul.pagination li a { text-decoration: none; color: #337ab7; font-size: 1rem; }
+ul.pagination li.active a { color: white; }
+ul.pagination li.active { background-color: #337ab7; }
+ul.pagination li a:hover, ul.pagination li a.active { color: blue; }
+.page-selection { width: 48px; height: 30px; color: #337ab7; }
+
+
+#search_section {margin-bottom: 10px;}
+#search_box {display: flex; justify-content: right;}
+#searchInput {max-width: 30%; height: 30px; font-size: 12px;}
+.searchBtn {margin-left: 5px;}
+
+#select_box {height: 30px; width: 10%; margin-right: 5px; font-size: 12px; text-align: center;}

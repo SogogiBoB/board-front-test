@@ -1,6 +1,4 @@
 import {React, useEffect, useState} from "react";
-import 'bootstrap/dist/js/bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams, useNavigate, Link} from "react-router-dom";
 import axios from "axios";
 import BoardService from "../service/BoardService";
@@ -13,10 +11,8 @@ const SelectDetail = () =>{
     const param = useParams();
     const paramUid  = param.uid;
 
-    const [uid, setUid] = useState();
-    const [title, setTitle] = useState();
-    const [content, setContent] = useState();
     const updateUrl = '/update/'+paramUid;
+    
 
     useEffect(() => {
         const detailUrl = "/board/api/selectBoard.json/" + paramUid;
@@ -28,11 +24,8 @@ const SelectDetail = () =>{
         }
         fetchData();
 
-        setUid(data.uid);
-        setTitle(data.title);
-        setContent(data.content);
-
     }, [data.uid, data.title, data.content, paramUid]);
+
 
     const deleteBoard = (uid) => {
         if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -51,7 +44,7 @@ const SelectDetail = () =>{
             <div className="inner">
                 <div className="title_section">
                     <div className="title_only">
-                        <h3>{title}</h3>
+                        <h3>{data.title}</h3>
                     </div>
                     <div className="date_box">
                         <div className="date_area">
@@ -65,14 +58,14 @@ const SelectDetail = () =>{
                     </div>
                 </div>
                 <div className="content_area">
-                    {content}
+                    {data.content}
                 </div>
             </div>
             
             <div className="btn_section">
                 <Link to={updateUrl} className="btn btn-sm btn-primary">Update</Link>
-                <button className='btn btn-sm btn-danger my-2 mx-2' onClick={ () => deleteBoard(uid) }>Del</button> 
-                <a href="/" className="btn btn-sm btn-secondary">Go back</a>
+                <button className='btn btn-sm btn-danger my-2 mx-2' onClick={ () => deleteBoard(data.uid) }>Del</button> 
+                <Link to="/"  className="btn btn-sm btn-secondary">Go back</Link>
             </div>
         </div>
         
