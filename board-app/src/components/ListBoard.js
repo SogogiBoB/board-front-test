@@ -88,10 +88,12 @@ function List() {
             if(keyword === '' || keyword === ' ') {//검색 조건은 선택했지만 검색어가 없는 경우
                 alert("검색어를 입력해주세요");
             } else {
-                //다른 페이지를 보다가 검색을 한 경우 페이지를 1로 초기화
-                setPage(1);
+                //조건절에서 걸리지 않으면 실행 (검색 조건 선택, 검색어 입력, 공백 아님)
 
-                //조건절에서 return 되지 않으면 실행
+                //다른 페이지를 보다가 검색을 한 경우 page 값이 그대로 유지되기 때문에 결과가 나오지 않을 수 있음
+                //page를 1로 초기화
+                setPage(1);
+                
                 BoardService.getPagedBoard(listUrl, page, keyword, selectedSearchCode)
                 .then(res=> {
                     setData(res.data.resultList);
@@ -130,11 +132,11 @@ function List() {
                     <input type="text" className='form-control' id="searchInput" list="board-list" placeholder='검색어를 입력해주세요.'/>
                     {/* 입력한 option으로 input에 datalist를 만들어주는 HTML 태그. js없이도 사용 가능 */}
                     <datalist id="board-list"> 
-                        {data.map((board) => {
+                        {data && data.map((board) => {
                             return <option key={board.uid} value={board.title} ></option>
                         })}
                     </datalist>
-                    <Button className='btn-sm btn-primary searchBtn' onClick={searchThisBoard}>검색</Button>
+                    <Button className='btn-sm btn-success searchBtn' onClick={searchThisBoard}>검색</Button>
                     <Button className='btn-sm btn-secondary searchBtn' onClick={resetKeyword}>Reset</Button>
                 </div>
             </section>
@@ -148,9 +150,9 @@ function List() {
                         </tr>
                     </thead>
                     <tbody id="boardListTbody">
-                        {/* 데이터 forEach => 데이터(배열)을 기준으로 삼항연산 */}
-                        {data.length > 0 
-                            ? (data.map((board) => {
+                        {/* data forEach => 배열 형태로 온 data의 length를 기준으로 삼항연산 */}
+                        {data && data.length > 0 
+                            ? (data && data.map((board) => {
                                 const detailUrl = '/detail/'+board.uid;
                                 return  <tr key = {board.uid} className={board.uid}>
                                             <td> {board.uid} </td>
@@ -165,17 +167,19 @@ function List() {
                 </Table>
 
                 <Pagination
-                    activePage={page}
-                    itemsCountPerPage={10}
-                    totalItemsCount={totalCnt || 0}
-                    pageRangeDisplayed={5}
-                    prevPageText={"‹"}
-                    nextPageText={"›"}
-                    onChange={HandlePageChange} />
+                    activePage={page} //required
+                    itemsCountPerPage={10} //default = 10
+                    totalItemsCount={totalCnt || 0} //required
+                    pageRangeDisplayed={5} //default = 5
+                    prevPageText={"prev"}
+                    nextPageText={"next"}
+                    onChange={HandlePageChange} //required
+                    />
 
                 <div className='btn_section'>
                     <Button variant="primary" onClick={handleShow}> 등록 </Button>
                 </div>
+                                
                 <div className='btn_section'>
                     <Button className='btn btn-sm btn-warning my-2'onClick={massiveInsert}>대량 등록(30개)</Button>
                 </div>
