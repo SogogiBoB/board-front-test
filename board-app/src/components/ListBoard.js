@@ -36,6 +36,7 @@ function List() {
             if(keyword ==='' || keyword === " ") {
                 BoardService.getPagedBoard(listUrl, page)
                 .then(res=> {
+                    console.log(res);
                     setData(res.data.content);
                     setTotalCnt(res.data.totalElements);
                 });
@@ -151,6 +152,7 @@ function List() {
                     </thead>
                     <tbody id="boardListTbody">
                         {/* data forEach => 배열 형태로 온 data의 length를 기준으로 삼항연산 */}
+                        
                         {data && data.length > 0 
                             ? (data && data.map((board) => {
                                 const detailUrl = '/detail/'+board.uid;

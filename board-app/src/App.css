@@ -105,3 +105,7 @@ ul.pagination li a:hover, ul.pagination li a.active { color: rgb(38, 38, 158); }
 .searchBtn {margin-left: 5px;}
 
 #select_box {height: 30px; width: 90px; margin-right: 5px; font-size: 12px; text-align: center;}
+
+#fileName_section {display: flex; justify-content: flex-start;}
+#fileName_section div {width: 45%;}
+#fileName_section div:first-child {margin-right: 20px;}
